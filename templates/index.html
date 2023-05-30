@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Research Trend Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        input[type="number"] {
+            width: 50px;
+        }
+
+        input[type="submit"] {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        #generate-sentences {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#generate-sentences").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/generate_sentences",
+                    data: {
+                        k: $("#k").val()
+                    },
+                    success: function (response) {
+                        $("#generated-sentences").html(response.sentences);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Text Mining App</h1>
+    
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".txt" required>
+        <br>
+        <label for="k">Top K Scores:</label>
+        <input type="number" name="k" id="k" min="1" required>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if scores %}
+        <h2>Top K Scores:</h2>
+        <ul>
+        {% for score in scores %}
+            <li>{{ score }}</li>
+        {% endfor %}
+        </ul>
+
+        <h2>Generated Sentences:</h2>
+        <ul id="generated-sentences">
+        </ul>
+
+        <button id="generate-sentences">Generate Sentences</button>
+    {% endif %}
+</body>
+</html>
