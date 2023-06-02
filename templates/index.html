@@ -67,7 +67,12 @@
                         k: $("#k").val()
                     },
                     success: function (response) {
-                        $("#generated-sentences").html(response.sentences);
+                        var sentences = response.sentences;
+                        var sentencesHtml = "";
+                        for (var i = 0; i < sentences.length; i++) {
+                             sentencesHtml += "<li>" + sentences[i] + "</li>";
+                        }
+                        $("#generated-sentences").html(sentencesHtml);
                     }
                 });
             });
@@ -75,7 +80,7 @@
     </script>
 </head>
 <body>
-    <h1>Text Mining App</h1>
+    <h1>Research Trend Analyzer</h1>
     
     {% if error %}
         <p>{{ error }}</p>

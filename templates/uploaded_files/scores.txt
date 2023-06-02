@@ -1,0 +1,5 @@
+system	91
+2000	83
+control	70
+Journal	64
+None	56

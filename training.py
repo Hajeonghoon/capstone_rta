@@ -2,7 +2,7 @@ import torch
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling, Trainer, TrainingArguments
 
 # 데이터 준비
-dataset = TextDataset(tokenizer=GPT2Tokenizer.from_pretrained("gpt2"), file_path= r"C:\Users\lego8\capstone_rta\uploaded_files\2000.txt", block_size=1024)
+dataset = TextDataset(tokenizer=GPT2Tokenizer.from_pretrained("gpt2"), file_path= r"C:\Users\HP\Desktop\capstone_rta\capstone_rta\static\agv\2002.txt", block_size=1024)
 data_collator = DataCollatorForLanguageModeling(tokenizer=GPT2Tokenizer.from_pretrained("gpt2"), mlm=False)
 
 # 모델 초기화

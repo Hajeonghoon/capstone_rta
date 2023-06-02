@@ -52,8 +52,10 @@ def generate_sentences_gpt2(scores):
         outputs = model.generate(inputs, max_length=50, num_return_sequences=1, temperature=0.7)
         generated_sentence = tokenizer.decode(outputs[0], skip_special_tokens=True)
         generated_sentences.append(generated_sentence)
+        
+        
     
-    return generated_sentences
+    return '\n'.join(generated_sentences)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -81,7 +83,7 @@ def generate_sentences():
         k = int(k)  # 정수로 변환
         top_scores = extract_top_k('uploaded_files/scores.txt', k)
         generated_sentences = generate_sentences_gpt2(top_scores)
-        return jsonify(sentences=generated_sentences)
+        return jsonify(sentences=generated_sentences.split('\n'))
     else:
         return jsonify(error='Invalid value for "k"')
 
